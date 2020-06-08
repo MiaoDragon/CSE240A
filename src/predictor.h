@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "gshare.h"
+#include "string.h"
 
 //
 // Student Information
