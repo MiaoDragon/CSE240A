@@ -46,8 +46,11 @@ gshare_make_prediction(uint32_t pc)
 {
 
     uint32_t idx = (pc % gshare_ghistoryTableSize) ^ gshare_ghistory;
-    printf("prediction index %d\n", idx);
+    //printf("prediction index %d\n", idx);
 	int8_t pred = gshare_ghistoryTable[idx];
+    //printf("prediction: %d\n", pred);
+
+    //printf("after prediction...\n");
 
 	if (pred < 2)
     {
@@ -78,7 +81,9 @@ gshare_train_predictor(uint32_t pc, uint8_t outcome)
     {
         gshare_ghistoryTable[idx] = SN;
     }
-
+    //printf("train index %d\n", idx);
+    //printf("updated prediction: %d\n", gshare_ghistoryTable[idx]);
     gshare_ghistory = (gshare_ghistory << 1) + outcome;
     gshare_ghistory = gshare_ghistory % gshare_ghistoryTableSize;
+    //printf("after training...");
 }

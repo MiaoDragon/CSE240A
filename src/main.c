@@ -61,7 +61,7 @@ handle_option(char *arg)
 // Reads a line from the input stream and extracts the
 // PC and Outcome of a branch
 //
-// Returns True if Successful 
+// Returns True if Successful
 //
 int
 read_branch(uint32_t *pc, uint8_t *outcome)
@@ -126,7 +126,7 @@ main(int argc, char *argv[])
     // Train the predictor
     train_predictor(pc, outcome);
   }
-
+  printf("after running on all the data\n");
   // Print out the mispredict statistics
   printf("Branches:        %10d\n", num_branches);
   printf("Incorrect:       %10d\n", mispredictions);

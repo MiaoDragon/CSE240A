@@ -108,8 +108,10 @@ train_predictor(uint32_t pc, uint8_t outcome)
       return;
     case GSHARE:
       gshare_train_predictor(pc, outcome);
+      return;
     case TOURNAMENT:
       tournament_train_predictor(pc, outcome);
+      return;
     case CUSTOM:
     default:
       break;
