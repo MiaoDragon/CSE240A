@@ -82,7 +82,7 @@ tournament_make_prediction(uint32_t pc)
         // select local hisotry
         //*** local prediction
         // use program counter to index in the lhistoryTable for finding the local history
-        uint32_t masked_pc = (2<<pcIndexBits-1) & pc;
+        uint32_t masked_pc = (1<<pcIndexBits-1) & pc;
         uint32_t lhistory = tour_lhistoryTable[masked_pc];
         // use the local history to index in the lhistoryPredTable for finding the current state
         int8_t lhistoryPred = tour_lhistoryPredTable[lhistory];
@@ -123,7 +123,7 @@ tournament_train_predictor(uint32_t pc, uint8_t outcome)
 {
     //*** train Local
     // use program counter to index in the lhistoryTable for finding the local history
-    uint32_t masked_pc = (2<<pcIndexBits-1) & pc;
+    uint32_t masked_pc = (1<<pcIndexBits-1) & pc;
     // extract the previous history value
     uint32_t lhistory = tour_lhistoryTable[masked_pc];
     // use the local history to index in the lhistoryPredTable for finding the current state
@@ -143,7 +143,7 @@ tournament_train_predictor(uint32_t pc, uint8_t outcome)
     // update local history table: shift and add
     lhistory = lhistory << 1 + outcome;
     // mask local history to be inside bits of lhistoryBits;
-    lhistory = (2<<lhistoryBits-1) & lhistory;
+    lhistory = (1<<lhistoryBits-1) & lhistory;
     tour_lhistoryTable[masked_pc] = lhistory;
 
 
@@ -201,5 +201,5 @@ tournament_train_predictor(uint32_t pc, uint8_t outcome)
     // update global history
     tour_ghistory = tour_ghistory << 1 + outcome;
     // mask global history to be inside bits of ghistoryBits
-    tour_ghistory = (2<<ghistoryBits-1) * tour_ghistory;
+    tour_ghistory = (1<<ghistoryBits-1) * tour_ghistory;
 }

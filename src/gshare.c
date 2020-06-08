@@ -44,7 +44,9 @@ gshare_init_predictor()
 uint8_t
 gshare_make_prediction(uint32_t pc)
 {
+
     uint32_t idx = (pc % gshare_ghistoryTableSize) ^ gshare_ghistory;
+    printf("prediction index %d\n", idx);
 	int8_t pred = gshare_ghistoryTable[idx];
 
 	if (pred < 2)
@@ -68,7 +70,14 @@ gshare_train_predictor(uint32_t pc, uint8_t outcome)
 
     // if the outcome is 1, then increment the prediction. Otherwise decrement the prediction
     gshare_ghistoryTable[idx] = gshare_ghistoryTable[idx] + (1)*(outcome==1) + (-1)*(outcome==0);
-
+    if (gshare_ghistoryTable[idx] > ST)
+    {
+        gshare_ghistoryTable[idx] = ST;
+    }
+    if (gshare_ghistoryTable[idx] < SN)
+    {
+        gshare_ghistoryTable[idx] = SN;
+    }
 
     gshare_ghistory = (gshare_ghistory << 1) + outcome;
     gshare_ghistory = gshare_ghistory % gshare_ghistoryTableSize;
