@@ -65,7 +65,8 @@ init_gshare_predictor()
 }
 
 void update_global_history(uint8_t in) {
-	globalHistory = (globalHistory << 1) + in;
+	globalHistory = globalHistory << 1;
+  globalHistory = globalHistory + in%2;
 	globalHistory = globalHistory%ghtSize;
 }
 
@@ -104,14 +105,8 @@ make_gshare_prediction(uint32_t pc)
 	uint32_t idx = (pc % ghtSize) ^ globalHistory;
 	uint8_t pred = ght[idx];
 
-	if (pred < 2) {
-		update_global_history(TAKEN);
-		return TAKEN;
-	}
-  else {
-		update_global_history(NOTTAKEN);
-		return NOTTAKEN;
-	}
+	if (pred < 2) return NOTTAKEN;
+  else return TAKEN;
 }
 
 uint8_t
