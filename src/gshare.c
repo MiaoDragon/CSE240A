@@ -7,10 +7,14 @@
 //========================================================//
 #include <stdio.h>
 #include "predictor.h" // for including the global variables
+#include "gshare.h"
 
 //------------------------------------//
 //      Predictor Data Structures     //
 //------------------------------------//
+
+int gshare_ghistoryBits; // Number of bits used for Global History
+
 uint32_t gshare_ghistory;
 uint32_t gshare_ghistoryTableSize;
 int8_t gshare_ghistoryTable[8193];  // maximal 2^13
@@ -22,10 +26,11 @@ int8_t gshare_ghistoryTable[8193];  // maximal 2^13
 // Initialize the predictor
 //
 void
-gshare_init_predictor()
+gshare_init_predictor(int ghistoryBits_in)
 {
+    gshare_ghistoryBits = ghistoryBits_in;
     // initialize sizes for each table
-    gshare_ghistoryTableSize = 1 << ghistoryBits;
+    gshare_ghistoryTableSize = 1 << gshare_ghistoryBits;
 
     // initialize global history bits to be NOTTAKEN
     gshare_ghistory = NOTTAKEN;

@@ -7,9 +7,18 @@
 //========================================================//
 #include <stdio.h>
 #include "predictor.h" // for including the global variables
+#include "tournament.h" // for including the global variables
+
 //------------------------------------//
 //      Predictor Data Structures     //
 //------------------------------------//
+
+int tour_ghistoryBits; // Number of bits used for Global History
+int tour_lhistoryBits; // Number of bits used for Local History
+int tour_pcIndexBits;  // Number of bits used for PC index
+
+
+
 uint32_t tour_ghistory;
 uint32_t tour_lhistoryTableSize;
 uint32_t tour_lhistoryTable[1025];
@@ -29,13 +38,16 @@ int8_t tour_chooserTable[8193];  // maximal 2^13   // 0 for selecting lhistory, 
 // Initialize the predictor
 //
 void
-tournament_init_predictor()
+tournament_init_predictor(int ghistoryBits_in, int lhistoryBits_in, int pcIndexBits_in)
 {
+    tour_ghistoryBits = ghistoryBits_in;
+    tour_lhistoryBits = lhistoryBits_in;
+    tour_pcIndexBits = pcIndexBits_in;
     // initialize sizes for each table
-    tour_lhistoryTableSize = 1 << pcIndexBits;
-    tour_lhistoryPredTableSize = 1 << lhistoryBits;
-    tour_ghistoryTableSize = 1 << ghistoryBits;
-    tour_chooserTableSize = 1 << ghistoryBits;
+    tour_lhistoryTableSize = 1 << tour_pcIndexBits;
+    tour_lhistoryPredTableSize = 1 << tour_lhistoryBits;
+    tour_ghistoryTableSize = 1 << tour_ghistoryBits;
+    tour_chooserTableSize = 1 << tour_ghistoryBits;
 
     // initialize global history bits to be NOTTAKEN
     tour_ghistory = NOTTAKEN;

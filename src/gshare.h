@@ -29,6 +29,8 @@
 //    Data Structure for Prediction   //
 //------------------------------------//
 
+extern int gshare_ghistoryBits; // Number of bits used for Global History
+
 extern uint32_t gshare_ghistory;
 uint32_t gshare_ghistoryTableSize;
 extern int8_t gshare_ghistoryTable[];
@@ -39,7 +41,7 @@ extern int8_t gshare_ghistoryTable[];
 
 // Initialize the predictor
 //
-void gshare_init_predictor();
+void gshare_init_predictor(int ghistoryBits_in);
 
 // Make a prediction for conditional branch instruction at PC 'pc'
 // Returning TAKEN indicates a prediction of taken; returning NOTTAKEN

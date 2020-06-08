@@ -6,8 +6,8 @@
 //  variables and defines                                 //
 //========================================================//
 
-#ifndef TOURNAMENT_H
-#define TOURNAMENT_H
+#ifndef CUSTOM_H
+#define CUSTOM_H
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -28,23 +28,9 @@
 //------------------------------------//
 //    Data Structure for Prediction   //
 //------------------------------------//
-
-extern int tour_ghistoryBits; // Number of bits used for Global History
-extern int tour_lhistoryBits; // Number of bits used for Local History
-extern int tour_pcIndexBits;  // Number of bits used for PC index
-
-extern uint32_t tour_ghistory;
-uint32_t tour_lhistoryTableSize;
-extern uint32_t tour_lhistoryTable[];
-uint32_t tour_lhistoryPredTableSize;
-extern int8_t tour_lhistoryPredTable[];
-uint32_t tour_ghistoryTableSize;
-extern int8_t tour_ghistoryTable[];
-uint32_t tour_chooserTableSize;
-extern int8_t tour_chooserTable[];
-
-
-
+uint32_t custom_chooserTableSize;
+extern int8_t custom_chooserTable[];
+extern uint32_t custom_ghistory;
 
 //------------------------------------//
 //    Predictor Function Prototypes   //
@@ -52,18 +38,18 @@ extern int8_t tour_chooserTable[];
 
 // Initialize the predictor
 //
-void tournament_init_predictor(int ghistoryBits_in, int lhistoryBits_in, int pcIndexBits_in);
+void custom_init_predictor();
 
 // Make a prediction for conditional branch instruction at PC 'pc'
 // Returning TAKEN indicates a prediction of taken; returning NOTTAKEN
 // indicates a prediction of not taken
 //
-uint8_t tournament_make_prediction(uint32_t pc);
+uint8_t custom_make_prediction(uint32_t pc);
 
 // Train the predictor the last executed branch at PC 'pc' and with
 // outcome 'outcome' (true indicates that the branch was taken, false
 // indicates that the branch was not taken)
 //
-void tournament_train_predictor(uint32_t pc, uint8_t outcome);
+void custom_train_predictor(uint32_t pc, uint8_t outcome);
 
 #endif

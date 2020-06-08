@@ -9,6 +9,7 @@
 #include "predictor.h"
 #include "gshare.h"
 #include "tournament.h"
+#include "custom.h"
 
 //
 // TODO:Student Information
@@ -56,10 +57,11 @@ init_predictor()
     case STATIC:
       return;
     case GSHARE:
-      gshare_init_predictor();
+      gshare_init_predictor(ghistoryBits);
     case TOURNAMENT:
-      tournament_init_predictor();
+      tournament_init_predictor(ghistoryBits, lhistoryBits, pcIndexBits);
     case CUSTOM:
+      custom_init_predictor();
     default:
       break;
   }
@@ -85,6 +87,7 @@ make_prediction(uint32_t pc)
     case TOURNAMENT:
       return tournament_make_prediction(pc);
     case CUSTOM:
+      return custom_make_prediction(pc);
     default:
       break;
   }
@@ -113,6 +116,8 @@ train_predictor(uint32_t pc, uint8_t outcome)
       tournament_train_predictor(pc, outcome);
       return;
     case CUSTOM:
+      custom_train_predictor(pc, outcome);
+      return;
     default:
       break;
   }
